@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import connect from "react-redux";
-import actions from "../redux/auth";
+import { connect } from "react-redux";
+import { operations } from "../../redux/auth";
+
+console.log(operations);
 
 class RegisterForm extends Component {
   state = {
@@ -9,8 +11,6 @@ class RegisterForm extends Component {
     password: "",
   };
   handleChange = (event) => {
-    console.log(event.target.value);
-    console.log(event.target.name);
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
@@ -32,22 +32,26 @@ class RegisterForm extends Component {
   };
   render() {
     const { handleChange, handleSubmit } = this;
+    const {name, email, password} = this.state;
     return (
       <>
         <form onSubmit={handleSubmit}>
           <input
+            value={name}
             name="name"
             type="text"
             onChange={handleChange}
             placeholder="Name"
           />
           <input
+            value={email}
             name="email"
             type="email"
             onChange={handleChange}
             placeholder="Email"
           />
           <input
+            value={password}
             name="password"
             type="password"
             onChange={handleChange}
@@ -60,8 +64,8 @@ class RegisterForm extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  () => dispatch(actions.registerSucces);
+const mapDispatchToProps = {
+  onRegister: operations.register,
 };
 
 export default connect(null, mapDispatchToProps)(RegisterForm);
